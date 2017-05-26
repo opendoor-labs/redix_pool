@@ -46,6 +46,18 @@ Redis.command(["GET", "foo"])
 #=> {:ok, "bar"}
 ```
 
+## Testing
+
+Currently, the tests assume you have an instance of Redis running locally at `localhost:6379`.
+
+On OSX, Redis can be installed easily with `brew`:
+
+```bash
+brew install redis
+```
+
+Once you have Redis running, simply run `mix test`.
+
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/redix_pool](https://hexdocs.pm/redix_pool).
