@@ -1,8 +1,6 @@
 defmodule RedixPool.Worker do
   use GenServer
 
-  import Redix, only: [command: 2, command!: 2, pipeline: 2, pipeline!: 2]
-
   alias RedixPool.Config
 
   @redis_url "redis://localhost:6379"
