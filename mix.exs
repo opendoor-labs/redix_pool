@@ -17,7 +17,8 @@ defmodule RedixPool.Mixfile do
   end
 
   def package do
-    [homepage_url: @github_url,
+    [maintainers: ["Connor Jacobsen"],
+     homepage_url: @github_url,
      licenses: ["MIT"],
      links: %{"Github" => @github_url},
      source_url: @github_url]
