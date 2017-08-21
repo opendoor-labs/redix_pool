@@ -46,9 +46,6 @@ defmodule RedixPool do
       {:ok, "OK"}
       iex> RedixPool.command(["GET", "k"])
       {:ok, "foo"}
-
-      iex> RedixPool.command(["INCR", "k"])
-      {:error, "ERR value is not an integer or out of range"}
   """
   @spec command(command, Keyword.t) ::
         {:ok, [Redix.Protocol.redis_value]} | {:error, atom | Redix.Error.t}
@@ -70,9 +67,6 @@ defmodule RedixPool do
       "OK"
       iex> RedixPool.command!(["GET", "k"])
       "foo"
-
-      iex> RedixPool.command!(["INCR", "k"])
-      ** (Redix.Error) ERR value is not an integer or out of range
   """
   @spec command!(command, Keyword.t) :: Redix.Protocol.redis_value | no_return
   def command!(args, opts \\ []) do
