@@ -2,6 +2,8 @@
 
 Simple Redis pooling built on [redix](https://github.com/whatyouhide/redix) and [poolboy](https://github.com/devinus/poolboy).
 
+![circleci-shield](https://circleci.com/gh/opendoor-labs/redix_pool.svg?style=shield&circle-token=c503d1e0da6337b12043465c54ac240d0e902d04)
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
