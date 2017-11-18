@@ -1,9 +1,7 @@
 defmodule RedixPool.Worker do
   use GenServer
 
-  alias RedixPool.Config
-
-  @redis_url "redis://localhost:6379"
+  import RedixPool.Config, only: [get: 1]
 
   ## Client API
 
@@ -29,7 +27,7 @@ defmodule RedixPool.Worker do
   end
 
   defp connect do
-    redis_url = Config.get(:redis_url, @redis_url)
+    redis_url = get(:redis_url)
     {:ok, conn} = Redix.start_link(redis_url)
     conn
   end

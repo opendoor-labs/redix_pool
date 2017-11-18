@@ -1,14 +1,21 @@
 defmodule RedixPool.Config do
-  @doc false
-  def get(key, default \\ nil) do
-    :redix_pool
-    |> Application.get_env(key, default)
-    |> resolve_config(default)
-  end
+  @default_config %{
+    pool_name: :redix_pool,
+    max_overflow: 1,
+    pool_size: 10,
+    redis_url: "redis://localhost:6379",
+    timeout: 5000
+  }
 
   @doc false
-  def resolve_config({:system, var_name}, default),
-    do: System.get_env(var_name) || default
-  def resolve_config(value, _default),
-    do: value
+  def get(key) do
+    get(key, Map.get(@default_config, key))
+  end
+  def get(key, fallback) do
+    case Application.get_env(:redix_pool, key, fallback) do
+      {:system, varname} -> System.get_env(varname)
+      {:system, varname, default} -> System.get_env(varname) || default
+      value -> value
+    end
+  end
 end
