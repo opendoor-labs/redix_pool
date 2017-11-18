@@ -11,26 +11,26 @@ defmodule RedixPool do
   more in-depth documentation. Many of the examples in this documentation are
   pulled directly from the `Redix` docs.
   """
-  use Application
-
-  alias RedixPool.Config
-
   @type command :: [binary]
 
-  @pool_name :redix_pool
+  use Application
+
+  import RedixPool.Config, only: [get: 1]
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
+    pool_name = get(:pool_name)
+
     pool_options = [
-      name: {:local, @pool_name},
+      name: {:local, pool_name},
       worker_module: RedixPool.Worker,
-      size: Config.get(:pool_size, 10),
-      max_overflow: Config.get(:pool_max_overflow, 1)
+      size: get(:pool_size),
+      max_overflow: get(:pool_max_overflow)
     ]
 
     children = [
-      :poolboy.child_spec(@pool_name, pool_options, [])
+      :poolboy.child_spec(pool_name, pool_options, [])
     ]
 
     opts = [strategy: :one_for_one, name: RedixPool.Supervisor]
@@ -51,9 +51,9 @@ defmodule RedixPool do
         {:ok, [Redix.Protocol.redis_value]} | {:error, atom | Redix.Error.t}
   def command(args, opts \\ []) do
     :poolboy.transaction(
-      @pool_name,
+      get(:pool_name),
       fn(worker) -> GenServer.call(worker, {:command, args, opts}) end,
-      RedixPool.Config.get(:timeout, 5000)
+      get(:timeout)
     )
   end
 
@@ -71,9 +71,9 @@ defmodule RedixPool do
   @spec command!(command, Keyword.t) :: Redix.Protocol.redis_value | no_return
   def command!(args, opts \\ []) do
     :poolboy.transaction(
-      @pool_name,
+      get(:pool_name),
       fn(worker) -> GenServer.call(worker, {:command!, args, opts}) end,
-      Config.get(:timeout, 5000)
+      get(:timeout)
     )
   end
 
@@ -92,9 +92,9 @@ defmodule RedixPool do
         {:ok, [Redix.Protocol.redis_value]} | {:error, atom}
   def pipeline(args, opts \\ []) do
     :poolboy.transaction(
-      @pool_name,
+      get(:pool_name),
       fn(worker) -> GenServer.call(worker, {:pipeline, args, opts}) end,
-      Config.get(:timeout, 5000)
+      get(:timeout)
     )
   end
 
@@ -114,9 +114,9 @@ defmodule RedixPool do
   @spec pipeline!([command], Keyword.t) :: [Redix.Protocol.redis_value] | no_return
   def pipeline!(args, opts \\ []) do
     :poolboy.transaction(
-      @pool_name,
+      get(:pool_name),
       fn(worker) -> GenServer.call(worker, {:pipeline!, args, opts}) end,
-      RedixPool.Config.get(:timeout, 5000)
+      get(:timeout)
     )
   end
 end

@@ -11,7 +11,7 @@ by adding `redix_pool` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:redix_pool, "~> 0.1.0"}]
+  [{:redix_pool, "~> 0.2.0"}]
 end
 ```
 
@@ -25,7 +25,8 @@ use Mix.Config
 
 config :redix_pool,
   redis_url: "redis://localhost:6379",
-  pool_size: {:system, "POOL_SIZE"}, # System.get_env("POOL_SIZE") will be executed at runtime
+  pool_size: {:system, "POOL_SIZE"},
+  pool_name: {:system, "POOL_NAME"},
   pool_max_overflow: 1
 ```
 
