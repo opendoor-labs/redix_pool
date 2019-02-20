@@ -1,7 +1,7 @@
 defmodule RedixPool.Mixfile do
   use Mix.Project
 
-  @version "0.1.0"
+  @version "0.2.0"
   @description "Simple Redis pooling built on redix and poolboy"
   @github_url "https://github.com/opendoor-labs/redix_pool"
 
@@ -44,7 +44,7 @@ defmodule RedixPool.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [{:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-     {:redix, "~> 0.6"},
+     {:redix, "~> 0.9"},
      {:poolboy, "~> 1.5"}]
   end
 end
