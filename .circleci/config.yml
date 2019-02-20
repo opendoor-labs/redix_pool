@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: elixir:1.4
+      - image: elixir:1.6
       - image: redis:3.2.8
     working_directory: /app
     environment:
