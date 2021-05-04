@@ -48,7 +48,7 @@ defmodule RedixPool do
       {:ok, "foo"}
   """
   @spec command(command, Keyword.t) ::
-        {:ok, [Redix.Protocol.redis_value]} | {:error, atom | Redix.Error.t}
+        {:ok, Redix.Protocol.redis_value} | {:error, atom | Redix.Error.t}
   def command(args, opts \\ []) do
     :poolboy.transaction(
       @pool_name,
